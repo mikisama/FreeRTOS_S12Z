@@ -3,10 +3,13 @@
 
 #define __NOP() __asm(nop)
 
+volatile unsigned long ulRegTest1LoopCounter = 0UL, ulRegTest2LoopCounter = 0UL;
+
+extern void vRegTest1Task(void *pvParameters);
+extern void vRegTest2Task(void *pvParameters);
+
 void prvSetupHardware(void);
 void LED_TASK(void *pvParameters);
-void LOOP1_TASK(void *pvParameters);
-void LOOP2_TASK(void *pvParameters);
 
 void prvSetupHardware(void)
 {
@@ -46,22 +49,6 @@ void LED_TASK(void *pvParameters)
     }
 }
 
-void LOOP1_TASK(void *pvParameters)
-{
-    for (;;)
-    {
-        __NOP();
-    }
-}
-
-void LOOP2_TASK(void *pvParameters)
-{
-    for (;;)
-    {
-        __NOP();
-    }
-}
-
 void main(void)
 {
     prvSetupHardware();
@@ -73,15 +60,15 @@ void main(void)
                 3,
                 NULL);
 
-    xTaskCreate(LOOP1_TASK,
-                "LOOP1_TASK",
+    xTaskCreate(vRegTest1Task,
+                "Reg1",
                 configMINIMAL_STACK_SIZE,
                 NULL,
                 2,
                 NULL);
 
-    xTaskCreate(LOOP2_TASK,
-                "LOOP2_TASK",
+    xTaskCreate(vRegTest2Task,
+                "Reg2",
                 configMINIMAL_STACK_SIZE,
                 NULL,
                 2,
