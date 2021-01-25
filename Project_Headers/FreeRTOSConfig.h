@@ -82,7 +82,7 @@
 /* Constants provided for debugging and optimisation assistance. */
 #define configCHECK_FOR_STACK_OVERFLOW        0
 #define configQUEUE_REGISTRY_SIZE             0
-#define configASSERT( x )                     do { if( ( x ) == 0 ) { __asm( BGND ); } } while(0)
+#define configASSERT( x )                     do { if( ( x ) == 0 ) { taskDISABLE_INTERRUPTS(); for( ;; ) {} } } while(0)
 
 /* Constants that define which hook (callback) functions should be used. */
 #define configUSE_IDLE_HOOK                   0
